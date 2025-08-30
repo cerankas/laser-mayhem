@@ -1,46 +1,53 @@
+import { initCanvas, clearCanvas } from "./util";
+import { DirectionControl } from "./directionControl";
+import { Rays } from "./rays";
 import { Mirrors } from "./mirrors";
-import { Player } from "./player";
-import { Ray } from "./ray";
-import { clear, init } from "./util";
+import { Targets } from "./targets";
 
-const ctx = init();
+const ctx = initCanvas();
 
-const mirrors = new Mirrors(500, ctx.canvas.width, ctx.canvas.height);
+const [width, height] = [ctx.canvas.width, ctx.canvas.height];
 
-const player = new Player(ctx.canvas.width, ctx.canvas.height);
+const directionControl = new DirectionControl(width/2, height/2)
 
-const ray = new Ray();
+const rays = new Rays(width/2, height/2, 100, 10);
+
+const mirrors = new Mirrors(200, width, height);
+
+const targets = new Targets(width, height, 10);
 
 let pause = false;
+
 document.addEventListener('keypress', e => {
-  if (e.key == ' ') pause = !pause;
+  if (e.key == 'p') pause = !pause;
 })
 
-requestAnimationFrame(animate);
-
+let hue = 0;
 let last = 0;
 
 function animate(t) {
-
   const dt = (t - last) / 1000;
   last = t;
-  
-  clear(ctx);
 
-  if (!pause) mirrors.move(dt / 20);
+  if (!pause) hue += dt * 20;
   
-  ctx.stroke();
+  clearCanvas(ctx);
+
+  if (!pause) mirrors.move(dt / 2);
   
-  player.move(dt);
+  rays.trace(directionControl.angle, Math.PI/180 * 3, mirrors.mirrors, targets.targets, (target, charge) => { target.absorb(hue, charge * dt) });
   
-  const n = 100;
-  for (let d = -n/2; d <= n/2; d += 1) {
-    ray.trace(player.x, player.y, mirrors.mirrors, 10, d / n / 10);
-    ray.draw(ctx);
-  }
+  targets.updateHits(width, height);
+
+  rays.draw(ctx, hue);
   
   mirrors.draw(ctx);
-  player.draw(ctx);
-  
+
+  targets.draw(ctx);
+
+  targets.drawScore(ctx);
+
   requestAnimationFrame(animate);
 }
+
+requestAnimationFrame(animate);

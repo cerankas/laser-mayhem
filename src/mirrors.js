@@ -15,7 +15,7 @@ export class Mirrors {
 
   draw(ctx) {
     ctx.beginPath();
-    ctx.strokeStyle = 'gray';
+    ctx.strokeStyle = 'white';
     ctx.lineWidth = 1;
     for (const mirror of this.mirrors) mirror.draw(ctx);
     ctx.stroke();

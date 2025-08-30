@@ -1,10 +1,14 @@
 export class Mirror {
   constructor(mx, my) {
+    this.randomize(mx, my);
+  }
+  
+  randomize(mx, my) {
     this.x = Math.random() * mx;
     this.y = Math.random() * my;
     this.a = Math.random() * Math.PI;
     this.r = 30 + Math.random() * 10;
-    this.s = (.5 - Math.random()) * 1;
+    this.s = (.5 - Math.random()) * 1;    
   }
 
   move(dt) {
