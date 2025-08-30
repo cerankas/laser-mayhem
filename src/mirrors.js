@@ -1,11 +1,12 @@
 import { Mirror } from "./mirror";
 
+
 export class Mirrors {
-  constructor(count, mx, my) {
+  constructor(mx, my, count) {
     this.mirrors = [];
     
     for (let i = 0; i < count; i += 1) {
-      this.mirrors.push(new Mirror(mx, my))
+      this.mirrors.push(new Mirror(mx, my));
     }
   }
 

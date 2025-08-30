@@ -9,17 +9,20 @@ export class Targets {
 
   updateHits(mx, my) {
     for (const target of this.targets) {
+      target.updateSound();
       if (target.charge > 100) {
-        console.log('++')
         this.score++;
         target.randomize(mx, my);
       }
       if (target.charge < -100) {
-        console.log('--')
         this.score--;
         target.randomize(mx, my);
       }
     }
+  }
+
+  mute() {
+    for (const target of this.targets) target.sound.update(1000,0);
   }
   
   draw(ctx) {

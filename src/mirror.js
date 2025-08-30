@@ -1,14 +1,25 @@
+import { avoider } from "./avoider";
+
+
 export class Mirror {
   constructor(mx, my) {
+    this.r = Math.min(mx, my) * .02;
     this.randomize(mx, my);
+    avoider.add(this);
   }
   
   randomize(mx, my) {
-    this.x = Math.random() * mx;
-    this.y = Math.random() * my;
+    while (true) {
+      const x = Math.random() * mx;
+      const y = Math.random() * my;
+      if (!avoider.isColliding(x, y, this.r)) {
+        this.x = x;
+        this.y = y;
+        break;
+      }
+    }
     this.a = Math.random() * Math.PI;
-    this.r = 30 + Math.random() * 10;
-    this.s = (.5 - Math.random()) * 1;    
+    this.s = (.5 + Math.random() * .5) * (Math.random() > .5 ? 1 : -1) / 3;
   }
 
   move(dt) {
