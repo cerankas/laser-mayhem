@@ -1,4 +1,5 @@
 import { Ghost } from "./ghost";
+import { scoreSound } from "./sound";
 import { Target } from "./target";
 
 export class Targets {
@@ -14,11 +15,13 @@ export class Targets {
       target.updateSound();
       if (target.charge > 100) {
         this.score++;
+        scoreSound(1);
         this.ghosts.push(new Ghost(target.x, target.y, target.r, target.hue, -1));
         target.randomize(mx, my);
       }
       if (target.charge < -100) {
         this.score--;
+        scoreSound(-1);
         this.ghosts.push(new Ghost(target.x, target.y, target.r, target.hue, 1));
         target.randomize(mx, my);
       }
