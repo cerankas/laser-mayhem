@@ -10,8 +10,6 @@ export class Target {
     avoider.add(this);
     this.sound = null;
     this.delta = 0;
-
-    document.addEventListener('pointermove', () => { if (!this.sound) this.sound = new ChargeSound(); });
   }
 
   randomize(mx, my) {
@@ -49,7 +47,8 @@ export class Target {
   }
 
   updateSound() {
-    this.sound?.update(500 + this.charge * 2 + (this.delta > 0 ? 500 : 0), Math.log10(Math.abs(this.delta)+1));
+    if (this.sound == null) this.sound = new ChargeSound()
+    this.sound.update(500 + this.charge * 2 + (this.delta > 0 ? 500 : 0), Math.log10(Math.abs(this.delta)+1));
     this.delta = 0;
   }
 }

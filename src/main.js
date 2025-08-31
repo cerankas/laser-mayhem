@@ -16,12 +16,15 @@ const rays = new Rays(width/2, height/2, 100, 10);
 const mirrors = new Mirrors(width, height, 100 * Math.max(width, height) / Math.min(width, height));
 const targets = new Targets(width, height, 10);
 
+document.getElementById('play-button').addEventListener('click', () => control.pause = false);
 
 let lastTime = 0;
 
 function animate(currentTime) {
   const dt = (currentTime - lastTime) / 1000;
   lastTime = currentTime;
+
+  document.getElementById('pause-overlay').style.display = control.pause ? 'flex' : 'none';
 
   clearCanvas(ctx);
 

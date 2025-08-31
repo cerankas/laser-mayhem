@@ -6,14 +6,14 @@ export class Control {
     this.y = y;
 
     this.angle = 0;
-    this.pause = false;;
+    this.pause = true;
     this.hue = 0;
     
     document.addEventListener('pointerdown', this.pointerEventHandler);
     document.addEventListener('pointermove', this.pointerEventHandler);
 
     document.addEventListener('keypress', e => {
-      if (e.key == 'p') this.pause = !this.pause;
+      if (e.key == ' ') this.pause = !this.pause;
     });
   }
   

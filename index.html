@@ -6,7 +6,18 @@
     <title>Risky Mirrors</title>
   </head>
   <body style="background-color: black; margin: 0; height: 100vh; overflow:hidden; touch-action: none;">
-    <canvas id="canvas" width="300" height="300"></canvas>
+    
+    <canvas id="canvas"></canvas>
+    
+    <div id="pause-overlay" style="position: absolute; inset: 0; z-index: 200; background-color: rgba(0,0,0,.5); display: flex; justify-content: center; align-items: center;">
+      <div style="position: absolute; margin: 2ch; padding: 2ch; border-radius: 2ch; background-color: white; display: flex; justify-content: center; align-items: center;">
+        <div id="play-button" style="font-size: xx-large; font-family: Arial, Helvetica, sans-serif; text-align: center;">
+          Click or hit Space to play
+        </div>        
+      </div>
+    </div>
+    
     <script type="module" src="/src/main.js"></script>
+  
   </body>
 </html>

@@ -34,7 +34,7 @@ export class Targets {
   }
 
   mute() {
-    for (const target of this.targets) target.sound.update(1000,0);
+    for (const target of this.targets) target.sound?.update(1000,0);
   }
   
   draw(ctx) {
