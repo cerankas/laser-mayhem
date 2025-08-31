@@ -15,15 +15,10 @@ export class Target {
   }
 
   randomize(mx, my) {
-    while (true) {
-      const x = Math.random() * mx;
-      const y = Math.random() * my;
-      if (!avoider.isColliding(x, y, this.r) && distanceSquared(x, y, mx/2, my/2)**.5 < Math.min(mx, my) * .4) {
-        this.x = x;
-        this.y = y;
-        break;
-      }
-    }
+    [this.x, this.y] = avoider.fit(
+      () => [Math.random() * mx, Math.random() * my, this.r], 
+      (x, y) => distanceSquared(x, y, mx/2, my/2) < (Math.min(mx, my) * .4)**2
+    );
     this.hue = Math.random() * 360;
     this.charge = 0;
   }

@@ -9,15 +9,7 @@ export class Mirror {
   }
   
   randomize(mx, my) {
-    while (true) {
-      const x = Math.random() * mx;
-      const y = Math.random() * my;
-      if (!avoider.isColliding(x, y, this.r)) {
-        this.x = x;
-        this.y = y;
-        break;
-      }
-    }
+    [this.x, this.y] = avoider.fit(() => [Math.random() * mx, Math.random() * my, this.r]);
     this.a = Math.random() * Math.PI;
     this.s = (.5 + Math.random() * .5) * (Math.random() > .5 ? 1 : -1) / 3;
   }

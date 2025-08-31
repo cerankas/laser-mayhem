@@ -10,7 +10,7 @@ export class ChargeSound {
 
     this.lfo = this.audioCtx.createOscillator();
     this.lfo.type = "sine";
-    this.lfo.frequency.value = 120;
+    this.lfo.frequency.value = 20;
 
     this.lfoGain = this.audioCtx.createGain();
     this.lfoGain.gain.value = 100;
