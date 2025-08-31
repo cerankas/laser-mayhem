@@ -1,9 +1,11 @@
+import { Ghost } from "./ghost";
 import { Target } from "./target";
 
 export class Targets {
   constructor(mx, my, count) {
     this.score = 0;
     this.targets = [];
+    this.ghosts = [];
     for (let i = 0; i < count; i++) this.targets.push(new Target(mx, my));
   }
 
@@ -12,13 +14,20 @@ export class Targets {
       target.updateSound();
       if (target.charge > 100) {
         this.score++;
+        this.ghosts.push(new Ghost(target.x, target.y, target.r, target.hue, -1));
         target.randomize(mx, my);
       }
       if (target.charge < -100) {
         this.score--;
+        this.ghosts.push(new Ghost(target.x, target.y, target.r, target.hue, 1));
         target.randomize(mx, my);
       }
     }
+  }
+
+  updateGhosts(dt) {
+    for (const ghost of this.ghosts) ghost.update(dt);
+    this.ghosts = this.ghosts.filter(ghost => !ghost.terminated);
   }
 
   mute() {
@@ -27,6 +36,7 @@ export class Targets {
   
   draw(ctx) {
     for (const target of this.targets) target.draw(ctx);
+    for (const ghost of this.ghosts) ghost.draw(ctx);
   }
 
   drawScore(ctx) {

@@ -31,6 +31,7 @@ function animate(currentTime) {
     mirrors.move(dt);
     rays.trace(control.angle, Math.PI/180 * 3, mirrors.mirrors, targets.targets, (target, charge) => { target.absorb(control.hue, charge * dt) });
     targets.updateHits(width, height);
+    targets.updateGhosts(dt);
   }
   else {
     targets.mute();
