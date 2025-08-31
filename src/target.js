@@ -1,5 +1,5 @@
 import { avoider } from "./avoider";
-import { ChargeSound } from "./chargeSound";
+import { ChargeSound } from "./sound";
 import { distanceSquared } from "./math";
 
 
