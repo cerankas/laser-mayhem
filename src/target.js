@@ -5,7 +5,7 @@ import { distanceSquared } from "./math";
 
 export class Target {
   constructor(mx, my) {
-    this.r = 20;
+    this.r = Math.min(mx, my) * .02;
     this.randomize(mx, my);
     avoider.add(this);
     this.sound = null;
