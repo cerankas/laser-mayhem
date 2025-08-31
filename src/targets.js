@@ -45,6 +45,6 @@ export class Targets {
   drawScore(ctx) {
     ctx.font = '30px arial'
     ctx.fillStyle = 'white';
-    ctx.fillText('score: ' + this.score, 10, 30);
+    ctx.fillText('Score: ' + this.score, 7, 30);
   }
 }

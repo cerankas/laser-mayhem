@@ -4,6 +4,7 @@ import { Control } from "./control";
 import { Rays } from "./rays";
 import { Mirrors } from "./mirrors";
 import { Targets } from "./targets";
+import { audioMute } from "./sound";
 
 
 const ctx = initCanvas();
@@ -17,6 +18,11 @@ const mirrors = new Mirrors(width, height, 100 * Math.max(width, height) / Math.
 const targets = new Targets(width, height, 10);
 
 document.getElementById('play-button').addEventListener('click', () => control.pause = false);
+document.getElementById('pause-button').addEventListener('click', () => control.pause = true);
+document.getElementById('sound-button').addEventListener('click', (e) => { 
+  audioMute.state = !audioMute.state; 
+  e.target.innerHTML = `&nbsp;Sound: ${audioMute.state ? 'off' : 'on'}&nbsp;`; 
+});
 
 let lastTime = 0;
 

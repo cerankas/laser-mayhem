@@ -1,3 +1,5 @@
+export const audioMute = { state: false };
+
 let audioCtx = null;
 
 document.addEventListener("visibilitychange", () => { if (document.hidden) audioCtx?.suspend(); else audioCtx?.resume(); });
@@ -33,12 +35,14 @@ export class ChargeSound {
   update(pitch, volume) {
     const now = audioCtx.currentTime;
     this.osc.frequency.exponentialRampToValueAtTime(Math.max(20, pitch), now + 0.05);
-    this.gainNode.gain.linearRampToValueAtTime(Math.max(0, Math.min(1, volume)) * .5, now + 0.05);
+    this.gainNode.gain.linearRampToValueAtTime(audioMute.state ? 0 : Math.max(0, Math.min(1, volume)) * .5, now + 0.05);
   }
 }
 
 
 export function scoreSound(delta) {
+  if (audioMute.state) return;
+
   const now = audioCtx.currentTime;
 
   const osc = audioCtx.createOscillator();
