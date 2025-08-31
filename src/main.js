@@ -38,7 +38,7 @@ function animate(currentTime) {
     if (Math.random() < dt) mirrors.mirrors[Math.random() * (mirrors.mirrors.length - .1) | 0].randomize(width, height);
     control.updateHue(dt);
     mirrors.move(dt);
-    rays.trace(control.angle, Math.PI/180 * 3, mirrors.mirrors, targets.targets, (target, charge) => { target.absorb(control.hue, charge * dt) });
+    rays.trace(control.angle, Math.PI/180 * 3, mirrors.mirrors, targets.targets, (target, charge) => { target.absorb(control.hue, charge * dt, targets.score) });
     targets.updateHits(width, height);
     targets.updateGhosts(dt);
   }

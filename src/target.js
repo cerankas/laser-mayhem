@@ -21,12 +21,14 @@ export class Target {
     this.charge = 0;
   }
 
-  absorb(hue, energy) {
+  absorb(hue, energy, score) {
     let delta = ((this.hue - hue) % 360 + 360) % 360; // range (0,360), 0 = equal
     if (delta >  180) delta = 360 - delta; // range (0,180), absolute difference
     delta = (90 - delta) / 90; // range (-1,1), 1 = equal
-    this.charge += delta * energy;
-    this.delta += delta * energy;
+    if (delta < 0) delta *= Math.max(1, 1 + score / 20);
+    delta *= energy;
+    this.charge += delta;
+    this.delta += delta;
   }
 
   draw(ctx) {
