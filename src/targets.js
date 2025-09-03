@@ -5,22 +5,35 @@ import { Target } from "./target";
 export class Targets {
   constructor(mx, my, count) {
     this.score = 0;
+    this.bestScore = parseInt(localStorage.getItem('bestScore') ?? '0');
+
     this.targets = [];
     this.ghosts = [];
+    
     for (let i = 0; i < count; i++) this.targets.push(new Target(mx, my));
+  }
+
+  updateScore(delta) {
+    this.score += delta;
+    document.getElementById('score').innerHTML = `&nbsp;Score: ${this.score}`;
+    
+    if (this.bestScore < this.score) {
+      this.bestScore = this.score;
+      localStorage.setItem('bestScore', this.score);
+    }
   }
 
   updateHits(mx, my) {
     for (const target of this.targets) {
       target.updateSound();
       if (target.charge > 100) {
-        this.score++;
+        this.updateScore(1);
         scoreSound(1);
         this.ghosts.push(new Ghost(target.x, target.y, target.r, target.hue, -1));
         target.randomize(mx, my);
       }
       if (target.charge < -100) {
-        this.score--;
+        this.updateScore(-1);
         scoreSound(-1);
         this.ghosts.push(new Ghost(target.x, target.y, target.r, target.hue, 1));
         target.randomize(mx, my);
@@ -40,11 +53,5 @@ export class Targets {
   draw(ctx) {
     for (const target of this.targets) target.draw(ctx);
     for (const ghost of this.ghosts) ghost.draw(ctx);
-  }
-
-  drawScore(ctx) {
-    ctx.font = '30px arial'
-    ctx.fillStyle = 'white';
-    ctx.fillText('Score: ' + this.score, 7, 30);
   }
 }

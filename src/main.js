@@ -49,7 +49,6 @@ function animate(currentTime) {
   rays.draw(ctx, control.hue);
   mirrors.draw(ctx);
   targets.draw(ctx);
-  targets.drawScore(ctx);
 
   requestAnimationFrame(animate);
 }
